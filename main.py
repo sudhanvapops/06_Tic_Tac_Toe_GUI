@@ -1,6 +1,7 @@
 import pygame
 from sys import exit
 import sprite_class
+import main_menu
 
 # Functions
 
@@ -172,6 +173,7 @@ Turn = True
 
 # game state
 game_over = False
+game_state = "main_menu"
 
 # winning line
 wining_line = ()
@@ -202,47 +204,56 @@ Board_Rect = Board.get_rect(center=(200,200))
 
 def game_play(screen): 
 
-    global O_State,X_State,game_over,Draw,Turn
+    global O_State,X_State,game_over,Draw,Turn,game_state
 
     while True:
+        if game_state == "main_menu":
 
-        screen.fill(COLOR)
+            action_1,action_2 = main_menu.main_game(screen)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
+            if action_2:
+                game_state = "game"
+        
+        elif game_state == "game":
 
-            if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0] == True and game_over == False:
+            screen.fill(COLOR)
 
-                # To ge Mouse Position
-                mouse_pos = pygame.mouse.get_pos()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
 
-                # X is Row , Y is Column  returns tupule of index (x,y)
-                x = round((mouse_pos[1] / 100)  )  - 1
-                y = round((mouse_pos[0] / 100)  )  - 1
+                if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0] == True and game_over == False:
 
-                change_X(X_State,x,y)
+                    # To ge Mouse Position
+                    mouse_pos = pygame.mouse.get_pos()
 
-            # For Restart Game
-            if (event.type == pygame.KEYDOWN and event.key == pygame.K_r):
-                game_over = False
-                Turn = True
-                Draw = False
-                X_State = [[False,False,False],[False,False,False],[False,False,False]]
-                O_State = [[False,False,False],[False,False,False],[False,False,False]]
+                    # X is Row , Y is Column  returns tupule of index (x,y)
+                    x = round((mouse_pos[1] / 100)  )  - 1
+                    y = round((mouse_pos[0] / 100)  )  - 1
+
+                    change_X(X_State,x,y)
+
+                # For Restart Game
+                if (event.type == pygame.KEYDOWN and event.key == pygame.K_r):
+                    game_over = False
+                    Turn = True
+                    Draw = False
+                    X_State = [[False,False,False],[False,False,False],[False,False,False]]
+                    O_State = [[False,False,False],[False,False,False],[False,False,False]]
 
 
-        screen.blit(Board,Board_Rect)
-        draw_board(O_State)
-        if game_over == True:
-            if Draw == True:
-                draw_text(screen,win_text)
-            else:
-                draw_text(screen,win_text)
-                draw_line(screen,wining_line[0],wining_line[1])
+            screen.blit(Board,Board_Rect)
+            draw_board(O_State)
+            if game_over == True:
+                if Draw == True:
+                    draw_text(screen,win_text)
+                else:
+                    draw_text(screen,win_text)
+                    draw_line(screen,wining_line[0],wining_line[1])
 
-        pygame.display.update()
+            pygame.display.update()
+
         clock.tick(60)
 
 
