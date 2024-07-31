@@ -58,6 +58,15 @@ def game_play(screen):
                     variables.X_State = [[False,False,False],[False,False,False],[False,False,False]]
                     variables.O_State = [[False,False,False],[False,False,False],[False,False,False]]
 
+                if (event.type == pygame.KEYDOWN and event.key == pygame.K_b):
+                    variables.game_over = False
+                    variables.game_state = "main_menu"
+                    variables.Turn = True
+                    variables.Draw = False
+                    variables.wining_line = ()
+                    variables.X_State = [[False,False,False],[False,False,False],[False,False,False]]
+                    variables.O_State = [[False,False,False],[False,False,False],[False,False,False]]
+
 
             screen.blit(variables.Board,variables.Board_Rect)
             functions.draw_board(variables.O_State,screen)
