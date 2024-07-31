@@ -20,14 +20,14 @@ import functions
 
 # Functions
 
-
 def game_play(screen): 
 
 
     while True:
         if variables.game_state == "main_menu":
-
-            pass
+            action_1,action_2 = main_menu.main_game(screen)
+            if action_2:
+                variables.game_state = "game"
         
         elif variables.game_state == "game":
 

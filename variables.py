@@ -18,7 +18,7 @@ Turn = True
 
 # game state
 game_over = False
-game_state = "game"
+game_state = "main_menu"
 
 # winning line
 wining_line = ()
