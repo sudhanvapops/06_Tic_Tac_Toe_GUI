@@ -140,3 +140,11 @@ def draw_text(surface,text_):
     text_2 = font.render("Press R to Restart", True,"Black")
     text_2_rect = text_2.get_rect(center = (200,380))
     surface.blit(text_2,text_2_rect)
+
+def rest_game():
+    variables.game_over = False
+    variables.Turn = True
+    variables.Draw = False
+    variables.wining_line = ()
+    variables.X_State = [[False,False,False],[False,False,False],[False,False,False]]
+    variables.O_State = [[False,False,False],[False,False,False],[False,False,False]]

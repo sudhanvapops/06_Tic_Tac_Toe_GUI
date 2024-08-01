@@ -27,9 +27,9 @@ def game_play(screen):
         if variables.game_state == "main_menu":
             action_1,action_2 = main_menu.main_game(screen)
             if action_2:
-                variables.game_state = "game"
+                variables.game_state = "2pgame"
         
-        elif variables.game_state == "game":
+        elif variables.game_state == "2pgame":
 
             screen.fill(variables.COLOR)
 
@@ -51,30 +51,18 @@ def game_play(screen):
 
                 # For Restart Game
                 if (event.type == pygame.KEYDOWN and event.key == pygame.K_r):
-                    variables.game_over = False
-                    variables.Turn = True
-                    variables.Draw = False
-                    variables.wining_line = ()
-                    variables.X_State = [[False,False,False],[False,False,False],[False,False,False]]
-                    variables.O_State = [[False,False,False],[False,False,False],[False,False,False]]
+                    functions.rest_game()
 
                 if (event.type == pygame.KEYDOWN and event.key == pygame.K_b):
-                    variables.game_over = False
+                    functions.rest_game()
                     variables.game_state = "main_menu"
-                    variables.Turn = True
-                    variables.Draw = False
-                    variables.wining_line = ()
-                    variables.X_State = [[False,False,False],[False,False,False],[False,False,False]]
-                    variables.O_State = [[False,False,False],[False,False,False],[False,False,False]]
 
 
             screen.blit(variables.Board,variables.Board_Rect)
             functions.draw_board(variables.O_State,screen)
             if variables.game_over == True:
-                if variables.Draw == True:
-                    functions.draw_text(screen,variables.win_text)
-                else:
-                    functions.draw_text(screen,variables.win_text)
+                functions.draw_text(screen,variables.win_text)
+                if variables.Draw != True:
                     functions.draw_line(screen,variables.wining_line[0],variables.wining_line[1])
 
             pygame.display.update()
