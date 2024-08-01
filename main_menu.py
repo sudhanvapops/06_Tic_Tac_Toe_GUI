@@ -25,4 +25,5 @@ def main_game(screen):
 
     pygame.display.update()
 
+
     return action_1,action_2
