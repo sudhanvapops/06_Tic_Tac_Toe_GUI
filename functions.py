@@ -3,25 +3,77 @@ import sprite_class
 import variables
 
 
+# Function to Check Win 
+def check_win(XO_State,XO_Object_State):
+
+
+        win_list = [
+            [0,1,2],  # first row
+            [3,4,5],  # second row
+            [6,7,8],  # third row
+            [0,3,6],  # first column
+            [1,4,7],  # second column
+            [2,5,8],  # third column
+            [0,4,8],  # diagonal
+            [2,4,6]   # diagonal
+        ]
+        
+        for row in win_list:
+            if variables.Turn == True:
+                if XO_State[row[0]] == XO_State[row[1]] == XO_State[row[2]] == "X":
+
+                    start = XO_Object_State[row[0]].rect.center   
+                    end   = XO_Object_State[row[2]].rect.center 
+
+                    XO_Object_State[row[0]].image = variables.X_Win_Image
+                    XO_Object_State[row[1]].image = variables.X_Win_Image
+                    XO_Object_State[row[2]].image = variables.X_Win_Image
+
+                    variables.wining_line = (start, end)
+                    variables.win_text = "X wins"
+                    return True
+            else:
+                if XO_State[row[0]] == XO_State[row[1]] == XO_State[row[2]] ==  "O":
+
+                    start = XO_Object_State[row[0]].rect.center   
+                    end   = XO_Object_State[row[2]].rect.center 
+
+                    XO_Object_State[row[0]].image = variables.O_Win_Image
+                    XO_Object_State[row[1]].image = variables.O_Win_Image
+                    XO_Object_State[row[2]].image = variables.O_Win_Image
+
+                    variables.wining_line = (start, end)
+                    variables.win_text = "O wins"
+                    return True
+                
+        return False
+
+def convert_2Dindex_to_1Dindex(x,y) -> int:
+
+    index = variables.index_dic[(x,y)] if (x,y) in variables.index_dic else ""
+
+    return  index
+
 # Function to change the array X and O State
-def change_X(x_state,x:int,y:int):
+def change_XO_State(XO_State,x:int,y:int):
 
     # Implement logic for array change here
     try :
-        if  x_state[x][y] == False:
+        index_1D = convert_2Dindex_to_1Dindex(x,y) 
+        if  XO_State[index_1D]== False:
 
             if variables.Turn == True:
-                x_state[x][y] = "X"
+                XO_State[index_1D]= "X"
             elif variables.Turn == False:
-                x_state[x][y] = "O"
+                XO_State[index_1D]= "O"
 
-            change_O(variables.O_State,x,y,variables.Turn)
+            Change_XO_object_State(variables.XO_Object_State,x,y,variables.Turn)
 
-            if check_win(variables.X_State,variables.O_State):
+            if check_win(variables.XO_State,variables.XO_Object_State):
                 variables.Turn = not variables.Turn
                 variables.game_over = True
                 return
-            elif draw_game(variables.X_State) == True:
+            elif draw_game(variables.XO_State) == True:
                 variables.win_text = "Draw"
                 variables.game_over = True
                 variables.Draw = True
@@ -36,54 +88,9 @@ def change_X(x_state,x:int,y:int):
         pass
 
 
-# Function to Check Win 
-def check_win(X_State,O_State):
-
-
-        win_list = [
-            [(0, 0), (0, 1), (0, 2)],  # first row
-            [(1, 0), (1, 1), (1, 2)],  # second row
-            [(2, 0), (2, 1), (2, 2)],  # third row
-            [(0, 0), (1, 0), (2, 0)],  # first column
-            [(0, 1), (1, 1), (2, 1)],  # second column
-            [(0, 2), (1, 2), (2, 2)],  # third column
-            [(0, 0), (1, 1), (2, 2)],  # diagonal
-            [(0, 2), (1, 1), (2, 0)]   # diagonal
-        ]
-        
-        for row in win_list:
-            if variables.Turn == True:
-                if X_State[row[0][0]][row[0][1]] == X_State[row[1][0]][row[1][1]] == X_State[row[2][0]][row[2][1]] == "X":
-
-                    start = O_State[row[0][0]][row[0][1]].rect.center   
-                    end = O_State[row[2][0]][row[2][1]].rect.center 
-
-                    O_State[row[0][0]][row[0][1]].image = variables.X_Win_Image
-                    O_State[row[1][0]][row[1][1]].image = variables.X_Win_Image
-                    O_State[row[2][0]][row[2][1]].image = variables.X_Win_Image
-
-                    variables.wining_line = (start, end)
-                    variables.win_text = "X wins"
-                    return True
-            else:
-                if X_State[row[0][0]][row[0][1]] == X_State[row[1][0]][row[1][1]] == X_State[row[2][0]][row[2][1]] == "O":
-
-                    start = O_State[row[0][0]][row[0][1]].rect.center   
-                    end = O_State[row[2][0]][row[2][1]].rect.center 
-
-                    O_State[row[0][0]][row[0][1]].image = variables.O_Win_Image
-                    O_State[row[1][0]][row[1][1]].image = variables.O_Win_Image
-                    O_State[row[2][0]][row[2][1]].image = variables.O_Win_Image
-
-                    variables.wining_line = (start, end)
-                    variables.win_text = "O wins"
-                    return True
-                
-        return False
-
 
 # Function to draw X and O on the screen when mouse is clicked on the position
-def change_O(o_state,x,y,Turn):
+def Change_XO_object_State(XO_Object_State,x,y,Turn):
 
 
     # y = mx + c 
@@ -92,13 +99,15 @@ def change_O(o_state,x,y,Turn):
     x_ = ((x + 1)*100)
     y_ = ((y + 1)*100)
 
+    index_1d = convert_2Dindex_to_1Dindex(x,y)
+
     try :
-        if Turn == True and o_state[x][y] == False:
+        if Turn == True and XO_Object_State[index_1d] == False:
             obj = sprite_class.Sprite(variables.X_Image,x_,y_)
-            o_state[x][y]=obj
-        elif Turn == False  and o_state[x][y] == False:
+            XO_Object_State[index_1d]=obj
+        elif Turn == False  and XO_Object_State[index_1d] == False:
             obj = sprite_class.Sprite(variables.O_Image,x_,y_)
-            o_state[x][y]=obj
+            XO_Object_State[index_1d]=obj
     except IndexError :
         pass
     
@@ -106,20 +115,19 @@ def change_O(o_state,x,y,Turn):
 
 
 # FUnction to draw Board on the screen
-def draw_board(o_state,screen):
-    for x in range(len(o_state)):
-        for y in range(len(o_state[x])):
-            if o_state[x][y] != False:
-                o_state[x][y].draw_(screen)
+def draw_board(XO_Object_State,screen):
+
+    for xo_object in XO_Object_State:
+        if xo_object != False:
+            xo_object.draw_(screen)
 
 # Game Draw Function
-def draw_game(X_State):
-    for row in X_State:
-        for col in row:
-            if col == False:
-                return False
-    
+def draw_game(XO_State):
+    for col in XO_State:
+        if col == False:
+            return False
     return True
+    
 
 
 # TO draw Lines
@@ -140,3 +148,12 @@ def draw_text(surface,text_):
     text_2 = font.render("Press R to Restart", True,"Black")
     text_2_rect = text_2.get_rect(center = (200,380))
     surface.blit(text_2,text_2_rect)
+
+
+def rest_game():
+    variables.game_over = False
+    variables.Turn = True
+    variables.Draw = False
+    variables.wining_line = ()
+    variables.XO_State = [False,False,False,False,False,False,False,False,False]
+    variables.XO_Object_State = [False,False,False,False,False,False,False,False,False]

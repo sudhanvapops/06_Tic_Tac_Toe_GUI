@@ -7,8 +7,9 @@ COLOR = "#FAFFAF"
 # Variables
 
 # X and O States
-X_State = [[False,False,False],[False,False,False],[False,False,False]]
-O_State = [[False,False,False],[False,False,False],[False,False,False]]
+# XO_State = [[False,False,False],[False,False,False],[False,False,False]]
+XO_State = [False,False,False,False,False,False,False,False,False]
+XO_Object_State =[False,False,False,False,False,False,False,False,False]
 
 
 x,y = False,False
@@ -18,12 +19,28 @@ Turn = True
 
 # game state
 game_over = False
-game_state = "game"
+game_state = "main_menu"
 
 # winning line
 wining_line = ()
 win_text = ""
 Draw = False
+
+
+# Index Dictionary 
+
+index_dic = {
+    (0,0) : 0,
+    (0,1) : 1,
+    (0,2) : 2,
+    (1,0) : 3,
+    (1,1) : 4,
+    (1,2) : 5,
+    (2,0) : 6,
+    (2,1) : 7,
+    (2,2) : 8,
+}
+
 
 # Images 
 
