@@ -7,8 +7,8 @@ COLOR = "#FAFFAF"
 # Variables
 
 # X and O States
-X_State = [[False,False,False],[False,False,False],[False,False,False]]
-O_State = [[False,False,False],[False,False,False],[False,False,False]]
+XO_State = [[False,False,False],[False,False,False],[False,False,False]]
+XO_Object_State = [[False,False,False],[False,False,False],[False,False,False]]
 
 
 x,y = False,False

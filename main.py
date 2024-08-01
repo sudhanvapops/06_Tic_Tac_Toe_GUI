@@ -47,7 +47,7 @@ def game_play(screen):
                     x = round((mouse_pos[1] / 100)  )  - 1
                     y = round((mouse_pos[0] / 100)  )  - 1
 
-                    functions.change_X(variables.X_State,x,y)
+                    functions.change_XO_State(variables.XO_State,x,y)
 
                 # For Restart Game
                 if (event.type == pygame.KEYDOWN and event.key == pygame.K_r):
@@ -59,7 +59,7 @@ def game_play(screen):
 
 
             screen.blit(variables.Board,variables.Board_Rect)
-            functions.draw_board(variables.O_State,screen)
+            functions.draw_board(variables.XO_Object_State,screen)
             if variables.game_over == True:
                 functions.draw_text(screen,variables.win_text)
                 if variables.Draw != True:
@@ -68,8 +68,5 @@ def game_play(screen):
             pygame.display.update()
 
         clock.tick(60)
-
-
-# This is a new branch
 
 game_play(screen)
