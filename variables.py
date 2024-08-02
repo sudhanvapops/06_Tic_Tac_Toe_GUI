@@ -16,6 +16,9 @@ XO_Object_State =[False,False,False,False,False,False,False,False,False]
 # Visited array
 visited_spots = []
 
+# Available array
+available_spots = [0,1,2,3,4,5,6,7,8]
+
 # x,y 
 x,y = False,False
 
@@ -30,6 +33,18 @@ game_state = "main_menu"
 wining_line = ()
 win_text = ""
 Draw = False
+
+# Winlist 
+win_list = [
+    [0, 1, 2],  # first row
+    [3, 4, 5],  # second row
+    [6, 7, 8],  # third row
+    [0, 3, 6],  # first column
+    [1, 4, 7],  # second column
+    [2, 5, 8],  # third column
+    [0, 4, 8],  # diagonal
+    [2, 4, 6]   # diagonal
+]
 
 
 # Index Dictionary 

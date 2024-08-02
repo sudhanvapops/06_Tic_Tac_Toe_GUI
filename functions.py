@@ -4,17 +4,7 @@ import variables
 
 
 # Function to Check Win 
-def check_win(XO_State, XO_Object_State):
-    win_list = [
-        [0, 1, 2],  # first row
-        [3, 4, 5],  # second row
-        [6, 7, 8],  # third row
-        [0, 3, 6],  # first column
-        [1, 4, 7],  # second column
-        [2, 5, 8],  # third column
-        [0, 4, 8],  # diagonal
-        [2, 4, 6]   # diagonal
-    ]
+def check_win(XO_State, XO_Object_State,win_list):
 
     player = "X" if variables.Turn else "O"
     win_image = variables.X_Win_Image if player == "X" else variables.O_Win_Image
@@ -46,24 +36,29 @@ def convert_2Dindex_to_1Dindex(x,y) -> int:
 
 # Entry point
 # Function to change the array X and O State
-def change_XO_State(XO_State,x:int,y:int):
+def change_XO_State(XO_State,index_1D,x,y):
 
     # Implement logic for array change here
     try :
-
-        index_1D = convert_2Dindex_to_1Dindex(x,y) 
-
         if (index_1D != None) and (0 <= index_1D <= 9 ):
 
             if  XO_State[index_1D] == False:
 
+                variables.available_spots.remove(index_1D)
                 variables.visited_spots.append(index_1D)
 
                 XO_State[index_1D] = "X" if variables.Turn == True else "O"
+                
+                if variables.Turn != True:
+                    for key,value in variables.index_dic.items():
+                        if index_1D == value:
+                            x = key[0] 
+                            y = key[1]
 
-                Change_XO_object_State(variables.XO_Object_State,x,y,variables.Turn)
+                Change_XO_object_State(variables.XO_Object_State,index_1D,variables.Turn,x,y)
 
-                if check_win(variables.XO_State,variables.XO_Object_State):
+
+                if check_win(variables.XO_State,variables.XO_Object_State,variables.win_list):
                     variables.Turn = not variables.Turn
                     variables.game_over = True
                     return
@@ -77,14 +72,14 @@ def change_XO_State(XO_State,x:int,y:int):
                 variables.Turn = not variables.Turn
 
                 return
-            
+                
     except IndexError :
         pass
 
 
 
 # Function to draw X and O on the screen when mouse is clicked on the position
-def Change_XO_object_State(XO_Object_State,x,y,Turn):
+def Change_XO_object_State(XO_Object_State,index_1d,Turn,x,y):
 
 
     # y = mx + c 
@@ -93,7 +88,6 @@ def Change_XO_object_State(XO_Object_State,x,y,Turn):
     x_ = ((x + 1)*100)
     y_ = ((y + 1)*100)
 
-    index_1d = convert_2Dindex_to_1Dindex(x,y)
 
     try :
         if Turn == True and XO_Object_State[index_1d] == False:
@@ -116,6 +110,7 @@ def draw_board(XO_Object_State,screen):
     for xo_object in XO_Object_State:
         if xo_object != False:
             xo_object.draw_(screen)
+
 
 # Game Draw Function
 def draw_game(XO_State):
@@ -156,3 +151,8 @@ def rest_game():
     variables.XO_State = [False,False,False,False,False,False,False,False,False]
     variables.XO_Object_State = [False,False,False,False,False,False,False,False,False]
     variables.visited_spots = []
+    variables.available_spots = [0,1,2,3,4,5,6,7,8]
+
+
+def minimax(x, y):
+    variables.Turn = False

@@ -1,12 +1,13 @@
 import pygame
 import variables
 import functions
+import one_p_functions
 
 
-
-def two_p_main_game(screen):
+def one_p_main_game(screen):
     
     while True:    
+
         screen.fill(variables.COLOR)
 
         for event in pygame.event.get():
@@ -14,18 +15,28 @@ def two_p_main_game(screen):
                 pygame.quit()
                 exit()
 
-            if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0] == True and variables.game_over == False:
+            # For O Turn
+            if variables.Turn == True:
+                if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0] == True and variables.game_over == False:
 
-                # To ge Mouse Position
-                mouse_pos = pygame.mouse.get_pos()
+                    # To ge Mouse Position
+                    mouse_pos = pygame.mouse.get_pos()
 
-                # X is Row , Y is Column  returns tupule of index (x,y)
-                x = round((mouse_pos[1] / 100)  )  - 1
-                y = round((mouse_pos[0] / 100)  )  - 1
+                    # X is Row , Y is Column  returns tupule of index (x,y)
+                    x = round((mouse_pos[1] / 100)  )  - 1
+                    y = round((mouse_pos[0] / 100)  )  - 1
 
+                    # Entrypoint
+                    index_1D = functions.convert_2Dindex_to_1Dindex(x,y) 
+                    functions.change_XO_State(variables.XO_State,index_1D,x,y)
+    
+            elif variables.Turn == False:
+                    
                 # Entrypoint
-                index_1D = functions.convert_2Dindex_to_1Dindex(x,y)
-                functions.change_XO_State(variables.XO_State,index_1D,x,y)
+                best_move = one_p_functions.find_best_move(variables.XO_State,variables.Turn)
+                print(f"{best_move = }")
+                functions.change_XO_State(variables.XO_State,best_move,0,0)
+
 
             # For Restart Game
             if (event.type == pygame.KEYDOWN and event.key == pygame.K_r):
