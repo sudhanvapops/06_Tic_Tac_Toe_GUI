@@ -6,6 +6,9 @@ COLOR = "#FAFFAF"
 
 # Variables
 
+# Clock
+clock = pygame.time.Clock()
+
 # X and O States
 # XO_State = [[False,False,False],[False,False,False],[False,False,False]]
 XO_State = [False,False,False,False,False,False,False,False,False]

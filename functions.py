@@ -48,42 +48,48 @@ def check_win(XO_State,XO_Object_State):
                 
         return False
 
+
+# Converts 2d index to 1d index
 def convert_2Dindex_to_1Dindex(x,y) -> int:
 
     index = variables.index_dic[(x,y)] if (x,y) in variables.index_dic else ""
 
-    return  index
+    if index != "":
+        return  index 
+    
+    return None
+
 
 # Function to change the array X and O State
 def change_XO_State(XO_State,x:int,y:int):
 
     # Implement logic for array change here
     try :
+
         index_1D = convert_2Dindex_to_1Dindex(x,y) 
-        if  XO_State[index_1D]== False:
 
-            if variables.Turn == True:
-                XO_State[index_1D]= "X"
-            elif variables.Turn == False:
-                XO_State[index_1D]= "O"
+        if index_1D != None:
+            if  XO_State[index_1D]== False:
 
-            Change_XO_object_State(variables.XO_Object_State,x,y,variables.Turn)
+                if variables.Turn == True:
+                    XO_State[index_1D]= "X"
+                elif variables.Turn == False:
+                    XO_State[index_1D]= "O"
 
-            if check_win(variables.XO_State,variables.XO_Object_State):
+                Change_XO_object_State(variables.XO_Object_State,x,y,variables.Turn)
+
+                if check_win(variables.XO_State,variables.XO_Object_State):
+                    variables.Turn = not variables.Turn
+                    variables.game_over = True
+                    return
+                elif draw_game(variables.XO_State) == True:
+                    variables.win_text = "Draw"
+                    variables.game_over = True
+                    variables.Draw = True
+                    return
                 variables.Turn = not variables.Turn
-                variables.game_over = True
                 return
-            elif draw_game(variables.XO_State) == True:
-                variables.win_text = "Draw"
-                variables.game_over = True
-                variables.Draw = True
-                return
-            variables.Turn = not variables.Turn
-            return
-        
-        else:
-            pass
-        
+            
     except IndexError :
         pass
 

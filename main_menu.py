@@ -10,7 +10,7 @@ Single_player_button = Button_Class.Button(200,140,Single_player_image)
 Two_player_button = Button_Class.Button(200,240,Two_player_image)
 
 
-def main_game(screen):
+def main_menu(screen):
 
     screen.fill("#FF4B91")
     
