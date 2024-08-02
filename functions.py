@@ -43,6 +43,8 @@ def convert_2Dindex_to_1Dindex(x,y) -> int:
     return index
 
 
+
+# Entry point
 # Function to change the array X and O State
 def change_XO_State(XO_State,x:int,y:int):
 

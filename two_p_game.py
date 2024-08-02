@@ -23,6 +23,7 @@ def two_p_main_game(screen):
                 x = round((mouse_pos[1] / 100)  )  - 1
                 y = round((mouse_pos[0] / 100)  )  - 1
 
+                # Entrypoint
                 functions.change_XO_State(variables.XO_State,x,y)
 
             # For Restart Game
@@ -39,6 +40,7 @@ def two_p_main_game(screen):
         screen.blit(variables.Board,variables.Board_Rect)
         
         functions.draw_board(variables.XO_Object_State,screen)
+
         if variables.game_over == True:
             functions.draw_text(screen,variables.win_text)
             if variables.Draw != True:
