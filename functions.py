@@ -3,6 +3,12 @@ import sprite_class
 import variables
 
 
+# Converts 2d index to 1d index
+def convert_2Dindex_to_1Dindex(x,y) -> int:
+    index = variables.index_dic[(x,y)] if (x,y) in variables.index_dic else None
+    return index
+
+
 # Function to Check Win 
 def check_win(XO_State, XO_Object_State,win_list):
 
@@ -22,16 +28,6 @@ def check_win(XO_State, XO_Object_State,win_list):
             return True
 
     return False
-
-
-
-# Converts 2d index to 1d index
-def convert_2Dindex_to_1Dindex(x,y) -> int:
-
-    index = variables.index_dic[(x,y)] if (x,y) in variables.index_dic else None
-    
-    return index
-
 
 
 # Entry point
@@ -90,13 +86,15 @@ def Change_XO_object_State(XO_Object_State,index_1d,Turn,x,y):
 
 
     try :
-        if Turn == True and XO_Object_State[index_1d] == False:
-            obj = sprite_class.Sprite(variables.X_Image,x_,y_)
+        if XO_Object_State[index_1d] == False:
 
-        elif Turn == False  and XO_Object_State[index_1d] == False:
-            obj = sprite_class.Sprite(variables.O_Image,x_,y_)
+            if Turn == True:
+                obj = sprite_class.Sprite(variables.X_Image,x_,y_)
 
-        XO_Object_State[index_1d] = obj
+            elif Turn == False:
+                obj = sprite_class.Sprite(variables.O_Image,x_,y_)
+
+            XO_Object_State[index_1d] = obj
         
     except IndexError :
         pass
@@ -153,6 +151,3 @@ def rest_game():
     variables.visited_spots = []
     variables.available_spots = [0,1,2,3,4,5,6,7,8]
 
-
-def minimax(x, y):
-    variables.Turn = False
