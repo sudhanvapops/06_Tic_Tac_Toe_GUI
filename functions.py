@@ -151,3 +151,17 @@ def rest_game():
     variables.visited_spots = []
     variables.available_spots = [0,1,2,3,4,5,6,7,8]
 
+
+def handle_click():
+    if pygame.mouse.get_pressed()[0] == True and variables.game_over == False:
+
+        # To ge Mouse Position
+        mouse_pos = pygame.mouse.get_pos()
+
+        # X is Row , Y is Column  returns tupule of index (x,y)
+        x = round((mouse_pos[1] / 100)  )  - 1
+        y = round((mouse_pos[0] / 100)  )  - 1
+
+        # Entrypoint
+        index_1D = convert_2Dindex_to_1Dindex(x,y)
+        change_XO_State(variables.XO_State,index_1D,x,y)

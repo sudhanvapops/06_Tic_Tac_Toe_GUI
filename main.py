@@ -12,8 +12,7 @@ pygame.display.set_caption("Tic Tac Toe!")
 
 
 import variables
-import two_p_game
-import one_p_game
+import Main_Game
 
 while True:
 
@@ -26,11 +25,8 @@ while True:
         elif action_2:
             variables.game_state = "2pgame"
 
-    elif variables.game_state == "1pgame":
-        one_p_game.one_p_main_game(screen)
-
-    elif variables.game_state == "2pgame":
-        two_p_game.two_p_main_game(screen)
+    elif variables.game_state == "1pgame" or variables.game_state == "2pgame":
+        Main_Game.main_game(screen)
 
 
     pygame.display.update()

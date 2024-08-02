@@ -4,7 +4,7 @@ import functions
 import minimax
 
 
-def one_p_main_game(screen):
+def main_game(screen):
     
     while True:    
         screen.fill(variables.COLOR)
@@ -24,35 +24,28 @@ def one_p_main_game(screen):
                 variables.game_state = "main_menu"
                 return
             
-            if variables.game_over == False:
+            if variables.game_state == "1pgame":
 
-                if variables.Turn == False:
-                
-                    if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0] == True:
+                if variables.game_over == False:
 
-                        # To ge Mouse Position
-                        mouse_pos = pygame.mouse.get_pos()
+                    if variables.Turn == False:
+                        functions.handle_click()
+                    
+                    elif variables.Turn == True:
 
-                        # X is Row , Y is Column  returns tupule of index (x,y)
-                        x = round((mouse_pos[1] / 100)  )  - 1
-                        y = round((mouse_pos[0] / 100)  )  - 1
+                        bestMove = minimax.findBestMove(variables.XO_State)
+                        print("The Optimal Move is :",bestMove) 
 
-                        # Entrypoint
+                        for key , value in variables.index_dic.items():
+                            if bestMove == value:
+                                x,y = key[0],key[1]
+
                         index_1D = functions.convert_2Dindex_to_1Dindex(x,y)
                         functions.change_XO_State(variables.XO_State,index_1D,x,y)
-                
-                if variables.Turn == True:
 
-                    bestMove = minimax.findBestMove(variables.XO_State)
-                    print("The Optimal Move is :",bestMove) 
-                    for key , value in variables.index_dic.items():
 
-                        if bestMove == value:
-                            x = key[0] 
-                            y = key[1]
-
-                    index_1D = functions.convert_2Dindex_to_1Dindex(x,y)
-                    functions.change_XO_State(variables.XO_State,index_1D,x,y)
+            elif variables.game_state ==  "2pgame":
+                functions.handle_click()
 
 
         screen.blit(variables.Board,variables.Board_Rect)
