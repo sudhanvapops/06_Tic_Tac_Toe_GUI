@@ -33,8 +33,9 @@ def main_game(screen):
                     
                     elif variables.Turn == True:
 
-                        bestMove = minimax.findBestMove(variables.XO_State)
+                        bestMove,bestval = minimax.findBestMove(variables.XO_State)
                         print("The Optimal Move is :",bestMove) 
+                        print("The Best value is :",bestval) 
 
                         for key , value in variables.index_dic.items():
                             if bestMove == value:
