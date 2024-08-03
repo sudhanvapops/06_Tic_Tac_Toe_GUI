@@ -39,12 +39,13 @@ def minimax(board, depth, isMax, alpha, beta):
             if j == False:
 
                 board[i] = "X"
-                best = max(best, minimax(board, depth + 1, not isMax, alpha, beta))
+                eval = minimax(board, depth + 1, not isMax, alpha, beta)
+                best = max(best, eval )
 
                 # Undoing the move
                 board[i] = False
 
-                alpha = max(alpha, best)
+                alpha = max(alpha, eval)
                 if beta <= alpha:
                     break
 
@@ -57,10 +58,11 @@ def minimax(board, depth, isMax, alpha, beta):
             if j == False:
 
                 board[i] = "O"
-                best = min(best, minimax(board, depth + 1, not isMax, alpha, beta))
+                eval =  minimax(board, depth + 1, not isMax, alpha, beta)
+                best = min(best, eval)
                 board[i] = False
 
-                beta = min(beta, best)
+                beta = min(beta, eval)
                 if beta <= alpha:
                     break
 
@@ -77,6 +79,7 @@ def findBestMove(board):
         if j == False:
 
             # Change here for "O" 
+            # Puts First MOve X So next move is False
             board[i] = "X"
             # And here in False
             moveVal = minimax(board, 0, False, -1000, 1000)
